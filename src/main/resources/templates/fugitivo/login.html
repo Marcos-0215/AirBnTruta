@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Fugitivo</title>
+    <div th:insert="~{frags/misc :: bootstrap}"></div>
+  </head>
+  <body>
+    <div
+      class="d-flex flex-column justify-content-center align-content-center align-items-center"
+    >
+      <p class="h2" style="padding: 5%">Bem vindo(a), fugitivo(a)!</p>
+
+      <form
+        method="post"
+        action="/fugitivo/login"
+        class="border shadow"
+        style="padding-left: 5%; padding-right: 5%; padding-top: 5%"
+      >
+        <div class="form-outline mb-4">
+          <input type="text" name="vulgo" class="form-control" />
+          <label class="form-label">Vulgo</label>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input type="password" name="senha" class="form-control" />
+          <label class="form-label">Senha</label>
+        </div>
+
+        <button class="btn btn-primary btn-block mb-4">
+          Entrar
+        </button>
+
+        <div class="text-center">
+          <p>
+            Não é cadastrado?
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modalcadastro">
+              Cadastre-se
+            </a>
+          </p>
+        </div>
+      </form>
+
+      <small th:text="${msg}"></small>
+    </div>
+
+    <!-- MODAL CADASTRO -->
+    <div class="modal fade" id="modalcadastro" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastro de Fugitivo</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div
+              th:insert="~{frags/forms :: generic(${@formHandler},'Post','/fugitivo/save',${fugitivo})}"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

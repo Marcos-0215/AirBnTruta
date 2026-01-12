@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospedagens Disponíveis</title>
+  </head>
+  <body>
+    
+    <div th:insert="~{frags/menu :: fugitivo}"></div>
+
+    <div th:if="${#lists.isEmpty(hospedagens)}" class="h4">
+      Nenhuma hospedagem disponível no momento.
+    </div>
+
+    <div
+      th:each="hospedagem : ${hospedagens}"
+      th:object="${hospedagem}"
+      style="padding:1%"
+    >
+      <div class="card border shadow" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title" th:text="*{descricaoCurta}"></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            Informações da Diária
+          </h6>
+
+          <p class="card-text" th:text="*{localizacao}"></p>
+          <p class="card-text" th:text="'Valor da diária: ' + *{diaria}"></p>
+          <p class="card-text" th:text="*{descricaoLonga}"></p>
+
+          <a
+            th:href="@{/hospedagem/view/{id}(id=*{codigo})}"
+            class="btn btn-info"
+          >
+            Ver detalhes
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
