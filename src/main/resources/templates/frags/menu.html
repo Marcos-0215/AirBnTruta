@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <div th:insert="~{frags/misc :: bootstrap}"></div>
   </head>
   <body>
     <div th:fragment="hospedeiro">
@@ -93,10 +94,52 @@
     </div>
 
     <div th:fragment="fugitivo">
-      <a href="/fugitivo">Início</a>
-      <a href="/fugitivo/interesses">Meus interesses</a>
-      <a href="/fugitivo/logout">Logout</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+      
+      <a class="navbar-brand" href="/fugitivo">
+        AirbnTruta
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarFugitivo"
+        aria-controls="navbarFugitivo"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarFugitivo">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="/fugitivo">
+              Início
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/fugitivo/interesses">
+              Meus interesses
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="/fugitivo/logout">
+              Logout
+            </a>
+          </li>
+
+        </ul>
+      </div>
     </div>
+  </nav>
+</div>
+
 
 
     <small th:text="${msg}"></small>
