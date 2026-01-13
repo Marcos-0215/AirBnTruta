@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AirbnTruta</title>
+
+    <div th:replace="~{frags/misc :: bootstrap}"></div>
 </head>
-<body>
-    <h1>olá</h1>
-    <a href="/servico">serviços</a>
-    <a href="/hospedeiro">Hospedeiro</a>
-    <a href="/fugitivo">Fugitivo</a>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">🏠 AirbnTruta</span>
+        </div>
+    </nav>
+
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card shadow p-4 text-center" style="max-width: 450px; width: 100%;">
+            <h2 class="mb-3">Bem-vindo ao AirbnTruta</h2>
+            <p class="text-muted mb-4">
+                Sistema de hospedagens nada convencionais.
+            </p>
+
+            <div class="d-grid gap-3">
+                <a href="/servico" class="btn btn-outline-primary btn-lg">
+                    Serviços
+                </a>
+                <a href="/hospedeiro" class="btn btn-success btn-lg">
+                    Área do Hospedeiro
+                </a>
+                <a href="/fugitivo" class="btn btn-danger btn-lg">
+                    Área do Fugitivo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-muted py-3">
+        Projeto acadêmico • AirbnTruta
+    </footer>
+
 </body>
 </html>
