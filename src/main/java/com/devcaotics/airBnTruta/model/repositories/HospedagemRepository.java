@@ -119,7 +119,7 @@ public final class HospedagemRepository implements Repository<Hospedagem, Intege
 
 
     public List<Hospedagem> filterByAvailable() throws SQLException{
-        String sql = "SELECT * FROM hospedagem where codigo_foragido = 0";
+        String sql = "SELECT * FROM hospedagem WHERE fugitivo_id IS NULL";
 
         return filterBy(sql);
     }
