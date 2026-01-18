@@ -32,13 +32,35 @@ public class FugitivoController {
 
     
     @GetMapping({"/", ""})
-    public String init(Model m) {
+    public String init(
+        @RequestParam(required = false) String local,
+        @RequestParam(required = false) Double precoMax,
+        Model m
+    ) {
 
         if (session.getAttribute("fugitivoLogado") != null) {
             List<Hospedagem> hospedagens = new ArrayList<>();
             try {
-                hospedagens = facade.filterHospedagemByAvailable();
+
+                //hospedagens = facade.filterHospedagemByAvailable();
+
+                // sem filtro
+                if (
+                    (local == null || local.isBlank())
+                    && precoMax == null
+                ) {
+                    hospedagens = facade.filterHospedagemByAvailable();
+                }
+                // Com filtro
+                else {
+                    hospedagens = facade.filterHospedagens(local, precoMax);
+                }
+
+
                 m.addAttribute("hospedagens", hospedagens);
+
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
                 m.addAttribute("msg", "Não foi possível carregar as hospedagens disponíveis!");

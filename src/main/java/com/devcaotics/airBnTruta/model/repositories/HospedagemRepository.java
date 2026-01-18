@@ -124,6 +124,64 @@ public final class HospedagemRepository implements Repository<Hospedagem, Intege
         return filterBy(sql);
     }
 
+
+    public List<Hospedagem> filterByAvailable(
+        String localizacao,
+        Double precoMax
+    ) throws SQLException {
+
+        StringBuilder sql = new StringBuilder(
+            "SELECT * FROM hospedagem WHERE fugitivo_id IS NULL"
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (localizacao != null && !localizacao.isBlank()) {
+            sql.append(" AND localizacao LIKE ?");
+            params.add("%" + localizacao + "%");
+        }
+
+        if (precoMax != null) {
+            sql.append(" AND diaria <= ?");
+            params.add(precoMax);
+        }
+
+        return filterBy(sql.toString(), params);
+    }
+
+    private List<Hospedagem> mapResult(ResultSet rs) throws SQLException {
+
+        List<Hospedagem> hospedagens = new ArrayList<>();
+
+        while (rs.next()) {
+
+            Hospedagem h = new Hospedagem();
+            h.setCodigo(rs.getInt("codigo"));
+            h.setDescricaoCurta(rs.getString("descricao_curta"));
+            h.setDescricaoLonga(rs.getString("descricao_longa"));
+            h.setLocalizacao(rs.getString("localizacao"));
+            h.setDiaria(rs.getDouble("diaria"));
+            h.setInicio(rs.getDate("inicio"));
+            h.setFim(rs.getDate("fim"));
+
+            h.setHospedeiro(
+                new HospedeiroRepository().read(rs.getInt("hospedeiro_id"))
+            );
+            h.setFugitivo(
+                new FugitivoRepository().read(rs.getInt("fugitivo_id"))
+            );
+            h.setServicos(
+                new ServicoRepository().filterByHospedagem(h.getCodigo())
+            );
+
+            hospedagens.add(h);
+        }
+
+        return hospedagens;
+    }
+
+
+
     public List<Hospedagem> filterByHospedeiro(int codigoHospedeiro) throws SQLException{
         String sql = "select * from hospedagem where hospedeiro_id = "+codigoHospedeiro;
 
@@ -137,6 +195,9 @@ public final class HospedagemRepository implements Repository<Hospedagem, Intege
 
         ResultSet rs = stmt.executeQuery();
 
+        return mapResult(rs);
+
+        /*
         List<Hospedagem> hospedagens = new ArrayList<>();
 
         while (rs.next()){
@@ -159,9 +220,30 @@ public final class HospedagemRepository implements Repository<Hospedagem, Intege
         }
 
         return hospedagens;
-        
+        */
 
      }
+
+
+    private List<Hospedagem> filterBy(
+        String sql,
+        List<Object> params
+    ) throws SQLException {
+
+        PreparedStatement stmt = ConnectionManager
+            .getCurrentConnection()
+            .prepareStatement(sql);
+
+        // Preenchendo os parâmetros dinamicamente
+        for (int i = 0; i < params.size(); i++) {
+            stmt.setObject(i + 1, params.get(i));
+        }
+
+        ResultSet rs = stmt.executeQuery();
+
+        return mapResult(rs);
+    }
+
 
 
 }

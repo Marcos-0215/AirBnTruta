@@ -90,6 +90,13 @@ public class Facade {
         return ((HospedagemRepository)this.rHospedagem).filterByAvailable();
     }
 
+    public List<Hospedagem> filterHospedagens(
+        String local,
+        Double precoMax
+    ) throws SQLException {
+        return ((HospedagemRepository)this.rHospedagem).filterByAvailable(local, precoMax);
+    }
+
     public List<Hospedagem> filterHospedagemByHospedeiro(int codigoHospedeiro) throws SQLException{
         return ((HospedagemRepository)this.rHospedagem).filterByHospedeiro(codigoHospedeiro);
     }

@@ -24,6 +24,39 @@
         Nenhuma hospedagem disponível no momento.
       </div>
 
+      <!-- Formulário do Filtro -->
+      <form method="get" th:action="@{/fugitivo}" class="row g-3 mb-4">
+
+        <div class="col-md-5">
+          <input
+            type="text"
+            name="local"
+            class="form-control"
+            placeholder="Localidade"
+            th:value="${param.local}"
+          />
+        </div>
+
+        <div class="col-md-4">
+          <input
+            type="number"
+            step="0.01"
+            name="precoMax"
+            class="form-control"
+            placeholder="Preço máximo"
+            th:value="${param.precoMax}"
+          />
+        </div>
+
+        <div class="col-md-3 d-grid">
+          <button class="btn btn-primary">
+            Filtrar
+          </button>
+        </div>
+
+      </form>
+
+
       <!-- Lista de hospedagens -->
       <div class="row">
         <div
