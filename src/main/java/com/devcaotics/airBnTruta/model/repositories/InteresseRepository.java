@@ -1,8 +1,11 @@
 package com.devcaotics.airBnTruta.model.repositories;
 
+import com.devcaotics.airBnTruta.model.entities.Hospedagem;
 import com.devcaotics.airBnTruta.model.entities.Interesse;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class InteresseRepository implements Repository<Interesse,Integer>{
@@ -46,6 +49,56 @@ public final class InteresseRepository implements Repository<Interesse,Integer>{
     public List<Interesse> readAll() throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'readAll'");
+    }
+
+    public boolean exists(int fugitivoId, int hospedagemId) throws SQLException {
+
+        String sql = """
+            SELECT 1
+            FROM interesse
+            WHERE fugitivo_id = ?
+              AND hospedagem_id = ?
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection().prepareStatement(sql);
+
+        stmt.setInt(1, fugitivoId);
+        stmt.setInt(2, hospedagemId);
+
+        ResultSet rs = stmt.executeQuery();
+
+        return rs.next();
+    }
+
+
+    public List<Hospedagem> filterByFugitivoDisponiveis(int fugitivoId)
+        throws SQLException {
+
+        String sql = """
+            SELECT h.*
+            FROM hospedagem h
+            JOIN interesse i ON i.hospedagem_id = h.codigo
+            WHERE i.fugitivo_id = ?
+              AND h.fugitivo_id IS NULL
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection().prepareStatement(sql);
+
+        stmt.setInt(1, fugitivoId);
+
+        ResultSet rs = stmt.executeQuery();
+
+        List<Hospedagem> lista = new ArrayList<>();
+        HospedagemRepository repo = new HospedagemRepository();
+
+        while (rs.next()) {
+            lista.add(repo.read(rs.getInt("codigo")));
+        }
+        // CORRIGIR!! (TO DO) Ineficaz
+
+        return lista;
     }
 
 }

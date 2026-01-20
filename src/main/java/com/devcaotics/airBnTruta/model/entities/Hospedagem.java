@@ -119,6 +119,9 @@ public class Hospedagem {
     }
     
     public String getFimFormatado(){
+        if (this.fim == null) {
+            return "Indefinido";
+        }
         return new SimpleDateFormat("dd/MM/yyyy").format(this.fim);
     }
     

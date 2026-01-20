@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Hospedagem</title>
+    <div th:insert="~{frags/misc :: bootstrap}"></div>
+</head>
+
+<body class="bg-light">
+
+<div th:insert="~{frags/menu :: fugitivo}"></div>
+
+<div class="container mt-4">
+
+    <h2 th:text="${hospedagem.descricaoCurta}"></h2>
+
+    <p class="text-muted" th:text="${hospedagem.localizacao}"></p>
+
+    <hr>
+
+    <p th:text="${hospedagem.descricaoLonga}"></p>
+
+    <p class="fw-bold">
+        Valor da diária:
+        <span th:text="'R$ ' + ${hospedagem.diaria}"></span>
+    </p>
+
+    <p>
+        Período:
+        <span th:text="${hospedagem.inicioFormatado}"></span>
+        até
+        <span th:text="${hospedagem.fimFormatado}"></span>
+    </p>
+
+    <hr>
+
+    <h5>Serviços inclusos</h5>
+
+    <ul>
+        <li th:each="s : ${hospedagem.servicos}"
+            th:text="${s.nome}">
+        </li>
+    </ul>
+
+    <a href="/fugitivo" class="btn btn-secondary mt-3">
+        Voltar
+    </a>
+
+</div>
+
+</body>
+</html>

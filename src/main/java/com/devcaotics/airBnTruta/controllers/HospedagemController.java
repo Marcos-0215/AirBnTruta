@@ -80,6 +80,31 @@ public class HospedagemController {
         
         return "redirect:/hospedeiro";
     }
+
+    @GetMapping("/view/{id}")
+    public String viewHospedagem(
+        @org.springframework.web.bind.annotation.PathVariable Integer id,
+        Model m
+    ) {
+
+        try {
+            Hospedagem h = facade.readHospedagem(id);
+
+            if (h == null) {
+                m.addAttribute("msg", "Hospedagem não encontrada.");
+                return "redirect:/fugitivo";
+            }
+
+            m.addAttribute("hospedagem", h);
+            return "hospedagem/view";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            m.addAttribute("msg", "Erro ao carregar a hospedagem.");
+            return "redirect:/fugitivo";
+        }
+    }
+
     
     
 
