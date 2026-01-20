@@ -120,6 +120,12 @@ public class Facade {
             .filterByFugitivoDisponiveis(fugitivoId);
     }
 
+    public void removerInteresse(int fugitivoId, int hospedagemId)
+        throws SQLException {
+
+        new InteresseRepository()
+            .delete(fugitivoId, hospedagemId);
+    }
 
 
 

@@ -47,6 +47,26 @@
             Ver detalhes
           </a>
 
+          <form
+            th:action="@{/fugitivo/interesse/remover}"
+            method="post"
+            class="mt-2"
+          >
+            <input
+              type="hidden"
+              name="hospedagemId"
+              th:value="*{codigo}"
+            />
+
+            <button
+              type="submit"
+              class="btn btn-outline-danger w-100"
+            >
+              Remover interesse
+            </button>
+          </form>
+
+
         </div>
       </div>
     </div>

@@ -107,6 +107,31 @@ public class FugitivoController {
         return "fugitivo/interesses";
     }
 
+    // REMOVER INTERESSE
+    @PostMapping("/interesse/remover")
+    public String removerInteresse(
+        @RequestParam("hospedagemId") int hospedagemId
+    ) {
+
+        Fugitivo fugitivo =
+            (Fugitivo) session.getAttribute("fugitivoLogado");
+
+        if (fugitivo == null) {
+            return "redirect:/fugitivo";
+        }
+
+        try {
+            facade.removerInteresse(
+                fugitivo.getCodigo(),
+                hospedagemId
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/fugitivo/interesses";
+    }
+
 
     // CADASTRO
     @PostMapping("/save")

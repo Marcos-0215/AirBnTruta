@@ -51,6 +51,26 @@ public final class InteresseRepository implements Repository<Interesse,Integer>{
         throw new UnsupportedOperationException("Unimplemented method 'readAll'");
     }
 
+    public void delete(int fugitivoId, int hospedagemId)
+        throws SQLException {
+
+        String sql = """
+            DELETE FROM interesse
+            WHERE fugitivo_id = ?
+            AND hospedagem_id = ?
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection()
+                .prepareStatement(sql);
+
+        stmt.setInt(1, fugitivoId);
+        stmt.setInt(2, hospedagemId);
+
+        stmt.executeUpdate();
+    }
+
+
     public boolean exists(int fugitivoId, int hospedagemId) throws SQLException {
 
         String sql = """
