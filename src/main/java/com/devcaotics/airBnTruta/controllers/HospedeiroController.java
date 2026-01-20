@@ -1,7 +1,9 @@
 package com.devcaotics.airBnTruta.controllers;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +36,18 @@ public class HospedeiroController {
         if(session.getAttribute("hospedeiroLogado") != null){
             Hospedeiro logado = (Hospedeiro)this.session.getAttribute("hospedeiroLogado");
             try {
+
+                Map<Integer, Boolean> mapaInteresses = new HashMap<>();
                 List<Hospedagem> hospedagens = this.facade.filterHospedagemByHospedeiro(logado.getCodigo());
+
+                for (Hospedagem h : hospedagens) {
+                    boolean temInteresse = this.facade.hospedagemTemInteresse(h.getCodigo());
+                    mapaInteresses.put(h.getCodigo(), temInteresse);
+                }
+
                 m.addAttribute("hospedagens", hospedagens);
+                m.addAttribute("mapaInteresses", mapaInteresses);                
+                
             } catch (SQLException e) {
                 e.printStackTrace();
                 m.addAttribute("msg", "não foi possível carregar suas hospedagens! Contate o desenvolvedor!");
