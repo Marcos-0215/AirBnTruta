@@ -131,6 +131,11 @@ public class Facade {
         return new InteresseRepository().existsByHospedagem(hospedagemId);
     }
 
+    public List<Interesse> listarInteressesPorHospedagem(int hospedagemId)
+        throws SQLException {
+
+        return new InteresseRepository().filterByHospedagem(hospedagemId);
+    }
 
 
 

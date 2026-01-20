@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.devcaotics.airBnTruta.model.entities.Hospedagem;
@@ -61,6 +62,45 @@ public class HospedeiroController {
         this.msg=null;
         return "hospedeiro/login";
     }
+
+
+    // TELA DE INTERESSES POR HOSPEDAGEM
+    @GetMapping("/interesses/{id}")
+    public String interessesHospedagem(
+            @PathVariable int id,
+            Model m
+    ) {
+        
+        if (session.getAttribute("hospedeiroLogado") == null) {
+            return "redirect:/hospedeiro";
+        }
+
+        try {
+            Hospedagem h = facade.readHospedagem(id);
+
+            // garante que a hospedagem pertence ao hospedeiro logado
+            if (h == null ||
+                h.getHospedeiro().getCodigo() !=
+                ((Hospedeiro) session.getAttribute("hospedeiroLogado")).getCodigo()) {
+
+                return "redirect:/hospedeiro";
+            }
+
+            m.addAttribute("hospedagem", h);
+            m.addAttribute(
+                "interesses",
+                facade.listarInteressesPorHospedagem(id)
+            );
+
+            return "hospedeiro/interesses";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "redirect:/hospedeiro";
+        }
+    }
+
+
 
     @PostMapping("/save")
     public String newHospedeiro(Model m, Hospedeiro h) {

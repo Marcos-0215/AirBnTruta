@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Interesses da Hospedagem</title>
+</head>
+<body>
+
+<div th:insert="~{frags/menu :: hospedeiro}"></div>
+
+<h2 th:text="'Interesses em: ' + ${hospedagem.descricaoCurta}"></h2>
+
+<div th:if="${#lists.isEmpty(interesses)}" class="h4">
+    Nenhum interesse registrado para esta hospedagem.
+</div>
+
+<table th:if="${!#lists.isEmpty(interesses)}" border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Fugitivo</th>
+            <th>Proposta</th>
+            <th>Tempo (dias)</th>
+            <th>Data</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="i : ${interesses}">
+            <td th:text="${i.interessado.vulgo}"></td>
+            <td th:text="${i.proposta}"></td>
+            <td th:text="${i.tempoPermanencia}"></td>
+            <td th:text="${i.realizadoFormatado}"></td>
+            <td>
+                <form method="post"
+                      th:action="@{/hospedeiro/aceitar}">
+                    <input type="hidden" name="interesseId"
+                           th:value="${i.codigo}">
+                    <button type="submit">
+                        Aceitar
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="/hospedeiro">Voltar</a>
+
+</body>
+</html>
