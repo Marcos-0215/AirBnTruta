@@ -42,6 +42,26 @@
         </li>
     </ul>
 
+    <form
+    th:if="${session.fugitivoLogado != null and !jaTemInteresse}"
+    th:action="@{/interesse/registrar}"
+    method="post"
+    >
+    <input type="hidden" name="hospedagemId" th:value="${hospedagem.codigo}" />
+
+    <button class="btn btn-success">
+        Estou interessado
+    </button>
+    </form>
+
+    <div
+    th:if="${jaTemInteresse}"
+    class="alert alert-info mt-3"
+    >
+    Você já demonstrou interesse nesta hospedagem.
+    </div>
+
+
     <a href="/fugitivo" class="btn btn-secondary mt-3">
         Voltar
     </a>

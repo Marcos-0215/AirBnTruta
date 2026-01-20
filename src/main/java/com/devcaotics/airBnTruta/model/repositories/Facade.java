@@ -3,6 +3,7 @@ package com.devcaotics.airBnTruta.model.repositories;
 import com.devcaotics.airBnTruta.model.entities.Fugitivo;
 import com.devcaotics.airBnTruta.model.entities.Hospedagem;
 import com.devcaotics.airBnTruta.model.entities.Hospedeiro;
+import com.devcaotics.airBnTruta.model.entities.Interesse;
 import com.devcaotics.airBnTruta.model.entities.Servico;
 import java.sql.SQLException;
 import java.util.List;
@@ -100,5 +101,18 @@ public class Facade {
     public List<Hospedagem> filterHospedagemByHospedeiro(int codigoHospedeiro) throws SQLException{
         return ((HospedagemRepository)this.rHospedagem).filterByHospedeiro(codigoHospedeiro);
     }
+
+    public boolean existeInteresse(int fugitivoId, int hospedagemId)
+        throws SQLException {
+
+        return new InteresseRepository()
+            .exists(fugitivoId, hospedagemId);
+    }
+
+    public void create(Interesse i) throws SQLException {
+        new InteresseRepository().create(i);
+    }
+
+
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.devcaotics.airBnTruta.model.entities.Fugitivo;
 import com.devcaotics.airBnTruta.model.entities.Hospedagem;
 import com.devcaotics.airBnTruta.model.entities.Hospedeiro;
 import com.devcaotics.airBnTruta.model.entities.Servico;
@@ -94,6 +95,15 @@ public class HospedagemController {
                 m.addAttribute("msg", "Hospedagem não encontrada.");
                 return "redirect:/fugitivo";
             }
+
+            Fugitivo f = (Fugitivo) session.getAttribute("fugitivoLogado");
+            if (f != null) {
+                boolean jaTemInteresse =
+                    facade.existeInteresse(f.getCodigo(), h.getCodigo());
+
+                m.addAttribute("jaTemInteresse", jaTemInteresse);
+            }
+
 
             m.addAttribute("hospedagem", h);
             return "hospedagem/view";
