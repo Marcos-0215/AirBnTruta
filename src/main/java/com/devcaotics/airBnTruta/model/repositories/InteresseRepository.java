@@ -121,4 +121,24 @@ public final class InteresseRepository implements Repository<Interesse,Integer>{
         return lista;
     }
 
+    public boolean existsByHospedagem(int hospedagemId) throws SQLException {
+
+        String sql = """
+            SELECT 1
+            FROM interesse
+            WHERE hospedagem_id = ?
+            LIMIT 1
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection().prepareStatement(sql);
+
+        stmt.setInt(1, hospedagemId);
+
+        ResultSet rs = stmt.executeQuery();
+
+        return rs.next();
+    }
+
+
 }

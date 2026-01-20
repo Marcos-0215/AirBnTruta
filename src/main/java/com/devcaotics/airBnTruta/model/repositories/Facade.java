@@ -127,6 +127,11 @@ public class Facade {
             .delete(fugitivoId, hospedagemId);
     }
 
+    public boolean hospedagemTemInteresse(int hospedagemId) throws SQLException {
+        return new InteresseRepository().existsByHospedagem(hospedagemId);
+    }
+
+
 
 
 }
