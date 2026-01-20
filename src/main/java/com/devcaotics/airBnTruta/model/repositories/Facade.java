@@ -113,6 +113,14 @@ public class Facade {
         new InteresseRepository().create(i);
     }
 
+    public List<Hospedagem> filterInteressesDisponiveis(int fugitivoId)
+        throws SQLException {
+
+        return new InteresseRepository()
+            .filterByFugitivoDisponiveis(fugitivoId);
+    }
+
+
 
 
 }

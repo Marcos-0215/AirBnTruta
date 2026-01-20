@@ -76,6 +76,38 @@ public class FugitivoController {
         return "fugitivo/login";
     }
 
+
+    // Tela de INTERESSES
+    @GetMapping("/interesses")
+    public String meusInteresses(Model m) {
+
+        Fugitivo fugitivo =
+            (Fugitivo) session.getAttribute("fugitivoLogado");
+
+        if (fugitivo == null) {
+            return "redirect:/fugitivo";
+        }
+
+        try {
+            List<Hospedagem> hospedagens =
+                facade.filterInteressesDisponiveis(
+                    fugitivo.getCodigo()
+                );
+
+            m.addAttribute("hospedagens", hospedagens);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            m.addAttribute(
+                "msg",
+                "Erro ao carregar seus interesses"
+            );
+        }
+
+        return "fugitivo/interesses";
+    }
+
+
     // CADASTRO
     @PostMapping("/save")
     public String newFugitivo(Model m, Fugitivo f) {
