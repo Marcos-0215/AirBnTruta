@@ -245,5 +245,26 @@ public final class HospedagemRepository implements Repository<Hospedagem, Intege
     }
 
 
+    public void aceitarFugitivo(int hospedagemId, int fugitivoId)
+            throws SQLException {
+
+        String sql = """
+            UPDATE hospedagem
+            SET fugitivo_id = ?
+            WHERE codigo = ?
+            AND fugitivo_id IS NULL
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection()
+                .prepareStatement(sql);
+
+        stmt.setInt(1, fugitivoId);
+        stmt.setInt(2, hospedagemId);
+
+        stmt.executeUpdate();
+    }
+
+
 
 }

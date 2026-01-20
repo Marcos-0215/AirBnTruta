@@ -100,6 +100,27 @@ public class HospedeiroController {
         }
     }
 
+    // ACEITAR INTERESSE
+    @PostMapping("/aceitar")
+    public String aceitarInteresse(
+            @RequestParam int interesseId
+    ) {
+
+        if (session.getAttribute("hospedeiroLogado") == null) {
+            return "redirect:/hospedeiro";
+        }
+
+        try {
+            facade.aceitarInteresse(interesseId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/hospedeiro";
+    }
+
+
+
 
 
     @PostMapping("/save")

@@ -180,5 +180,43 @@ public final class InteresseRepository implements Repository<Interesse,Integer>{
     }
 
 
+    public Interesse read(int id) throws SQLException {
+
+        String sql = """
+            SELECT *
+            FROM interesse
+            WHERE codigo = ?
+        """;
+
+        PreparedStatement stmt =
+            ConnectionManager.getCurrentConnection()
+                .prepareStatement(sql);
+
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (!rs.next()) return null;
+
+        Interesse i = new Interesse();
+        i.setCodigo(rs.getInt("codigo"));
+        i.setRealizado(rs.getLong("realizado"));
+        i.setProposta(rs.getString("proposta"));
+        i.setTempoPermanencia(rs.getInt("tempo_permanencia"));
+
+        i.setInteressado(
+            new FugitivoRepository()
+                .read(rs.getInt("fugitivo_id"))
+        );
+
+        i.setInteresse(
+            new HospedagemRepository()
+                .read(rs.getInt("hospedagem_id"))
+        );
+
+        return i;
+    }
+
+
 
 }

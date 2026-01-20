@@ -137,6 +137,20 @@ public class Facade {
         return new InteresseRepository().filterByHospedagem(hospedagemId);
     }
 
+    public void aceitarInteresse(int interesseId)
+            throws SQLException {
+
+        Interesse i = new InteresseRepository().read(interesseId);
+
+        if (i == null) return;
+
+        ((HospedagemRepository)this.rHospedagem).aceitarFugitivo(
+            i.getInteresse().getCodigo(),
+            i.getInteressado().getCodigo()
+        );
+    }
+
+
 
 
 }
