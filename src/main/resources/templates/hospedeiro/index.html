@@ -27,14 +27,15 @@
           </div>
 
           <h5 class="card-title" th:text="${descricaoCurta}"></h5>
-          <h6 class="card-subtitle mb-2 text-muted">Informações da Diária</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Informações da Hospedagem</h6>
           <div>
-            <p class="card-text" th:text="*{localizacao}">
+            <p class="card-text" th:text="*{descricaoCurta}">
             </p>
-            <p class="card-text" th:text="'valor da diária: '+*{diaria}">
+            <p class="card-text" th:text="'Valor da Diária: '+*{diaria}">
             </p>
-            <p class="card-text" th:text="*{descricaoLonga}">
-
+            <p class="card-text" th:text="'Local: '+*{localizacao}">
+            </p>
+            <p class="card-text" th:text="'Descrição: '+*{descricaoLonga}">
             </p>
           </div>
           <div class="d-flex justify-content-between">

@@ -35,9 +35,15 @@
                       th:action="@{/hospedeiro/aceitar}">
                     <input type="hidden" name="interesseId"
                            th:value="${i.codigo}">
-                    <button type="submit">
+                    <button 
+                    type="submit" 
+                    th:disabled="${hospedagem.fugitivo != null}"
+                    >
                         Aceitar
                     </button>
+                    <span th:if="${hospedagem.fugitivo != null}">
+                        Hospedagem já ocupada
+                    </span>
                 </form>
             </td>
         </tr>
